@@ -10,7 +10,6 @@ export default function Index() {
   const [filteredBookings, setFilteredBookings] = useState(bookings);
   const itemsPerPage = 10;
 
-  // เมื่อโหลดหน้าเว็บใหม่ ให้กรองข้อมูลที่ถูกลบออกจากการแสดงผล
   useEffect(() => {
     const deletedBookings = JSON.parse(localStorage.getItem('deletedBookings')) || [];
     const updatedBookings = bookings.filter(booking => !deletedBookings.includes(booking.id));
@@ -22,7 +21,7 @@ export default function Index() {
   const sortedBookings = [...filteredBookings].sort((a, b) => {
     const dateA = a.check_in_date ? new Date(a.check_in_date) : new Date(0);
     const dateB = b.check_in_date ? new Date(b.check_in_date) : new Date(0);
-    return dateA - dateB; // เรียงจากวันเก่าไปใหม่
+    return dateA - dateB;
   });
 
   const currentBookings = sortedBookings.slice(
@@ -58,20 +57,24 @@ export default function Index() {
       cancelButtonText: 'ยกเลิก'
     }).then((result) => {
       if (result.isConfirmed) {
-        // เก็บ id ของการจองที่ถูกลบใน localStorage
         const deletedBookings = JSON.parse(localStorage.getItem('deletedBookings')) || [];
         deletedBookings.push(id);
         localStorage.setItem('deletedBookings', JSON.stringify(deletedBookings));
 
-        // กรองการจองที่ไม่ใช่การจองที่ต้องการลบ
         const updatedBookings = filteredBookings.filter(booking => booking.id !== id);
-
-        // อัพเดตสถานะของ booking ใน state เพื่อแสดงผลในตาราง
         setFilteredBookings(updatedBookings);
 
         Swal.fire('ลบสำเร็จ!', 'การจองถูกลบแล้ว', 'success');
       }
     });
+  };
+
+  const calculateTotalPrice = (checkInDate, checkOutDate, pricePerNight = 1000) => {
+    const checkIn = new Date(checkInDate);
+    const checkOut = new Date(checkOutDate);
+    const diffInTime = checkOut - checkIn;
+    const diffInDays = Math.ceil(diffInTime / (1000 * 3600 * 24));
+    return diffInDays * pricePerNight;
   };
 
   return (
@@ -106,6 +109,7 @@ export default function Index() {
                   <th className="py-3 px-4 text-left">สถานะห้อง</th>
                   <th className="py-3 px-4 text-left">วันที่เช็คอิน</th>
                   <th className="py-3 px-4 text-left">วันที่เช็คเอาท์</th>
+                  <th className="py-3 px-4 text-left">ราคา</th>
                   <th className="py-3 px-4 text-center">การจัดการ</th>
                 </tr>
               </thead>
@@ -123,6 +127,15 @@ export default function Index() {
                     </td>
                     <td className="py-3 px-4">
                       {booking.check_out_date ? new Date(booking.check_out_date).toLocaleDateString() : "ไม่ระบุ"}
+                    </td>
+                    <td className="py-3 px-4">
+                      {booking.check_in_date && booking.check_out_date ? (
+                        <span>
+                          {`${calculateTotalPrice(booking.check_in_date, booking.check_out_date, booking.room_price).toLocaleString()} บาท`}
+                        </span>
+                      ) : (
+                        "ไม่ระบุ"
+                      )}
                     </td>
                     <td className="py-3 px-4 flex justify-center space-x-2">
                       <Link
