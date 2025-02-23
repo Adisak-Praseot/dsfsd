@@ -37,6 +37,7 @@ class RoomController extends Controller
     }
 
     public function store(Request $request)
+<<<<<<< HEAD
     {
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
@@ -100,6 +101,40 @@ class RoomController extends Controller
 
         return redirect()->route('rooms.index')->with('success', 'การจองสำเร็จแล้ว');
     }
+=======
+{
+    $validated = $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'customer_phone' => 'required|string|max:10',
+        'room_id' => 'required|string|exists:rooms,id',
+        'check_in_date' => 'required|date|after_or_equal:today',
+        'check_out_date' => 'required|date|after:check_in_date',
+    ]);
+
+    DB::transaction(function () use ($validated) {
+        $customer = Customer::firstOrCreate(
+            ['phone' => $validated['customer_phone']],
+            ['name' => $validated['customer_name']]
+        );
+
+        $room = Room::findOrFail($validated['room_id']);
+        if ($room->status !== 'not_reserved') {
+            throw new \Exception('ห้องนี้ถูกจองแล้ว');
+        }
+
+        Booking::create([
+            'customer_id' => $customer->id,
+            'room_id' => $validated['room_id'],
+            'check_in_date' => $validated['check_in_date'],
+            'check_out_date' => $validated['check_out_date'],
+        ]);
+
+        $room->update(['status' => 'reserved']);
+    });
+
+    return redirect()->route('rooms.index')->with('success', 'การจองสำเร็จแล้ว');
+}
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
     public function edit($id)
     {
@@ -107,13 +142,21 @@ class RoomController extends Controller
         $rooms = Room::where('status', 'not_reserved')
             ->orWhere('id', $booking->room_id)
             ->get(['id', 'room_number', 'status']);
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
         return Inertia::render('Rooms/Edit', [
             'booking' => $booking,
             'rooms' => $rooms,
         ]);
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -122,11 +165,16 @@ class RoomController extends Controller
             'room_id' => 'required|string|exists:rooms,id',
             'check_in_date' => 'required|date|after_or_equal:today',
             'check_out_date' => 'required|date|after:check_in_date',
+<<<<<<< HEAD
         ]);
+=======
+        ]);        
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
         DB::transaction(function () use ($validated, $id) {
             $booking = Booking::findOrFail($id);
 
+<<<<<<< HEAD
             // ตรวจสอบห้องว่าไม่ได้ถูกจองในวันที่เช็คอินที่เลือก
             $existingBooking = Booking::where('room_id', $validated['room_id'])
                 ->where(function ($query) use ($validated) {
@@ -162,6 +210,9 @@ class RoomController extends Controller
             }
 
             // อัปเดตการจอง
+=======
+            // อัปเดตข้อมูลการจอง
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
             $booking->update([
                 'check_in_date' => $validated['check_in_date'],
                 'check_out_date' => $validated['check_out_date'],
@@ -174,6 +225,7 @@ class RoomController extends Controller
                 'name' => $validated['customer_name'],
                 'phone' => $validated['customer_phone'],
             ]);
+<<<<<<< HEAD
 
             // หากห้องถูกเปลี่ยนไป ให้ปรับสถานะห้องเก่าเป็น 'not_reserved'
             if ($booking->room_id != $validated['room_id']) {
@@ -181,11 +233,18 @@ class RoomController extends Controller
                 $room = Room::findOrFail($validated['room_id']);
                 $room->update(['status' => 'reserved']);
             }
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
         });
 
         return redirect()->route('rooms.index')->with('success', 'อัปเดตข้อมูลสำเร็จแล้ว');
     }
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     public function destroy($id)
     {
         DB::transaction(function () use ($id) {
@@ -200,6 +259,7 @@ class RoomController extends Controller
 
         return redirect()->route('rooms.index')->with('success', 'ลบการจองสำเร็จแล้ว');
     }
+<<<<<<< HEAD
 
     public function availableRooms()
     {
@@ -211,4 +271,6 @@ class RoomController extends Controller
             'rooms' => $rooms
         ]);
     }
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 }

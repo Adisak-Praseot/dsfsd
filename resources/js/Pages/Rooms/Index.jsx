@@ -8,8 +8,11 @@ export default function Index() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredBookings, setFilteredBookings] = useState(bookings);
+<<<<<<< HEAD
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -39,6 +42,10 @@ export default function Index() {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     const filtered = bookings.filter(booking =>
       [booking.customer_name, booking.customer_phone, booking.room_number]
         .some(field => field?.toLowerCase().includes(e.target.value.toLowerCase()))
@@ -78,6 +85,7 @@ export default function Index() {
     return diffInDays * pricePerNight;
   };
 
+<<<<<<< HEAD
   const totalAmount = filteredBookings.reduce((sum, booking) => {
     if (booking.check_in_date && booking.check_out_date) {
       return sum + calculateTotalPrice(booking.check_in_date, booking.check_out_date, booking.room_price);
@@ -102,6 +110,12 @@ export default function Index() {
     <AuthenticatedLayout>
       <div className="container mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200">
         <h2 className="text-3xl font-bold text-center mb-6 text-black-600">รายชื่อลูกค้าจองที่พัก</h2>
+=======
+  return (
+    <AuthenticatedLayout>
+      <div className="container mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200">
+        <h2 className="text-3xl font-bold text-center mb-6 text-black-600">รายการการจองที่พัก</h2>
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
         <div className="flex justify-center mb-6 space-x-4">
           <input
@@ -177,6 +191,7 @@ export default function Index() {
         ) : (
           <p className="text-center py-6 text-gray-500">ไม่มีข้อมูลการจอง</p>
         )}
+<<<<<<< HEAD
         <div className="flex justify-center space-x-4 mb-6">
           <input
             type="date"
@@ -202,6 +217,8 @@ export default function Index() {
           <h3 className="text-lg font-semibold">ยอดรวมการจอง: {filteredBookings.length} รายการ</h3>
           <h3 className="text-lg font-semibold">ราคารวมทั้งหมด: {totalAmount.toLocaleString()} บาท</h3>
         </div>
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
         <div className="flex justify-center space-x-4 mt-6">
           <button

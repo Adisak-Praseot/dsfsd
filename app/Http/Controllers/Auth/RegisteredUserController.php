@@ -46,6 +46,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+<<<<<<< HEAD
         return redirect()->intended('/rooms');
+=======
+        return redirect(route('dashboard', absolute: false));
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     }
 }

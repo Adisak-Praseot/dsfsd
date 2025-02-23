@@ -27,6 +27,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+<<<<<<< HEAD
     public function store(Request $request)
 {
     $request->validate([
@@ -45,6 +46,17 @@ class AuthenticatedSessionController extends Controller
     return redirect()->intended('/rooms'); // 🔹 เปลี่ยนจาก '/dashboard' เป็น '/rooms'
 }
 
+=======
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard', absolute: false));
+    }
+
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     /**
      * Destroy an authenticated session.
      */

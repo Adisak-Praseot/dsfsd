@@ -21,12 +21,17 @@ export default function Create({ rooms }) {
       const checkOut = new Date(data.check_out_date);
       const diffTime = checkOut.getTime() - checkIn.getTime();
       const diffDays = Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
+<<<<<<< HEAD
       setTotalPrice(diffDays * 1000); // Assume the price per night is 1000 for now
+=======
+      setTotalPrice(diffDays * 1000);
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     } else {
       setTotalPrice(0);
     }
   }, [data.check_in_date, data.check_out_date]);
 
+<<<<<<< HEAD
   // กรองห้องที่ไม่ซ้ำกัน โดยใช้ Set เพื่อไม่ให้แสดงห้องซ้ำ
   const availableRooms = rooms
     .filter((room) => room.status === 'not_reserved' && /^([AB]10?|A[1-9]|B[1-9])$/.test(room.room_number))
@@ -38,10 +43,16 @@ export default function Create({ rooms }) {
   // ใช้ Set เพื่อกรองห้องที่ไม่ซ้ำ
   const uniqueRooms = Array.from(new Set(availableRooms.map(room => room.room_number)))
     .map(roomNumber => availableRooms.find(room => room.room_number === roomNumber));
+=======
+  const availableRooms = rooms.filter(
+    (room) => room.status === 'not_reserved' && /^([AB]10?|A[1-9]|B[1-9])$/.test(room.room_number)
+  );
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     // Validate that check-out date is after check-in date
     if (new Date(data.check_out_date) <= new Date(data.check_in_date)) {
       Swal.fire({
@@ -73,6 +84,8 @@ export default function Create({ rooms }) {
     }
 
     // If no overlapping booking, proceed with form submission
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     post('/bookings', {
       onSuccess: () => {
         const paymentURL = `https://promptpay.io/0832654075/${totalPrice}`;
@@ -101,7 +114,11 @@ export default function Create({ rooms }) {
   return (
     <AuthenticatedLayout>
       <div className="p-8 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-lg max-w-4xl mx-auto">
+<<<<<<< HEAD
         <h1 className="text-3xl font-bold text-center text-black-700 mb-6">เพิ่มข้อมูลการจอง</h1>
+=======
+        <h1 className="text-3xl font-bold text-center text-black-700 mb-6">Create Booking</h1>
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -116,7 +133,11 @@ export default function Create({ rooms }) {
           </div>
 
           <div>
+<<<<<<< HEAD
             <label className="block mb-2 text-lg font-medium text-gray-700">เบอร์โทร</label>
+=======
+            <label className="block mb-2 text-lg font-medium text-gray-700">Customer Phone</label>
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
             <input
               type="text"
               value={data.customer_phone}
@@ -127,14 +148,22 @@ export default function Create({ rooms }) {
           </div>
 
           <div>
+<<<<<<< HEAD
             <label className="block mb-2 text-lg font-medium text-gray-700">เลขห้อง</label>
+=======
+            <label className="block mb-2 text-lg font-medium text-gray-700">Room Number</label>
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
             <select
               value={data.room_id || ''}
               onChange={(e) => setData('room_id', e.target.value)}
               className="border p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               <option value="">-- เลือกหมายเลขห้อง --</option>
+<<<<<<< HEAD
               {uniqueRooms.map((room) => (
+=======
+              {availableRooms.map((room) => (
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
                 <option key={room.id} value={room.id}>
                   {room.room_number}
                 </option>

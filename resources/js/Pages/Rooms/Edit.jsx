@@ -13,8 +13,11 @@ export default function Edit() {
     check_out_date: booking.check_out_date || '',
   });
 
+<<<<<<< HEAD
   const [errors, setErrors] = useState({});
 
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,6 +35,7 @@ export default function Edit() {
           router.get('/rooms');
         });
       },
+<<<<<<< HEAD
       onError: (errors) => {
         setErrors(errors); // แสดงข้อผิดพลาดจากการ validate
         Swal.fire({
@@ -40,6 +44,8 @@ export default function Edit() {
           text: 'กรุณาตรวจสอบข้อมูลที่กรอกให้ถูกต้อง',
         });
       }
+=======
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
     });
   };
 
@@ -55,10 +61,16 @@ export default function Edit() {
               name="customer_name"
               value={formData.customer_name}
               onChange={handleChange}
+<<<<<<< HEAD
               className={`w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.customer_name ? 'border-red-500' : ''}`}
               required
             />
             {errors.customer_name && <p className="text-red-500 text-sm">{errors.customer_name}</p>}
+=======
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
           </div>
           <div>
             <label className="block text-lg font-medium mb-2">เบอร์โทรลูกค้า</label>
@@ -67,10 +79,16 @@ export default function Edit() {
               name="customer_phone"
               value={formData.customer_phone}
               onChange={handleChange}
+<<<<<<< HEAD
               className={`w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.customer_phone ? 'border-red-500' : ''}`}
               required
             />
             {errors.customer_phone && <p className="text-red-500 text-sm">{errors.customer_phone}</p>}
+=======
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
           </div>
           <div>
             <label className="block text-lg font-medium mb-2">เลือกห้อง</label>
@@ -78,6 +96,7 @@ export default function Edit() {
               name="room_id"
               value={formData.room_id}
               onChange={handleChange}
+<<<<<<< HEAD
               className={`w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.room_id ? 'border-red-500' : ''}`}
             >
               {rooms
@@ -96,6 +115,17 @@ export default function Edit() {
             {errors.room_id && <p className="text-red-500 text-sm">{errors.room_id}</p>}
           </div>
 
+=======
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              {rooms.map((room) => (
+                <option key={room.id} value={room.id}>
+                  ห้อง {room.room_number} ({room.status})
+                </option>
+              ))}
+            </select>
+          </div>
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
           <div>
             <label className="block text-lg font-medium mb-2">วันที่เช็คอิน</label>
             <input
@@ -103,10 +133,16 @@ export default function Edit() {
               name="check_in_date"
               value={formData.check_in_date}
               onChange={handleChange}
+<<<<<<< HEAD
               className={`w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.check_in_date ? 'border-red-500' : ''}`}
               required
             />
             {errors.check_in_date && <p className="text-red-500 text-sm">{errors.check_in_date}</p>}
+=======
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
           </div>
           <div>
             <label className="block text-lg font-medium mb-2">วันที่เช็คเอาท์</label>
@@ -115,10 +151,16 @@ export default function Edit() {
               name="check_out_date"
               value={formData.check_out_date}
               onChange={handleChange}
+<<<<<<< HEAD
               className={`w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.check_out_date ? 'border-red-500' : ''}`}
               required
             />
             {errors.check_out_date && <p className="text-red-500 text-sm">{errors.check_out_date}</p>}
+=======
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+>>>>>>> 1b2b43d9c610656a4dc770bb2016fbb0f80417f5
           </div>
           <button
             type="submit"
